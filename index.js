@@ -5,6 +5,7 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const ve = require('@n00p3/ve-js');
 const words = require('./features/words').words;
+const extractKanji = require('./features/kanji').extractKanji;
 const sqlHelper = require('./sqlHelper');
 
 const app = new express();
@@ -32,6 +33,10 @@ app.get('/', async (req, res) => {
       word.jmdict = sql;
     }
   }
+
+  if (features.includes('kanji'))
+    result.kanji = await extractKanji(text);
+
   res.send(result);
 
   // res.send({stat: 'ok'})

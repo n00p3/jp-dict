@@ -1,7 +1,8 @@
 const jmdict = require('better-sqlite3')('./dict/JMDict.sqlite3');
+const kanjidb = require('better-sqlite3')('./dict/kanjidb.sqlite3');
 const japanese = require('@lazy-cjk/japanese');
 
-function query(word) {
+function jmDictQuery(word) {
   // language=sql
   const stmt = jmdict.prepare(`
     select id, kanji, reading, gloss, position
@@ -21,9 +22,36 @@ function query(word) {
   return rows;
 }
 
-module.exports.jmdict = async (word) => {
-  const hiraganized = japanese.hiraganize(word);
-  const rows = query(hiraganized);
+function kanjiDefinitionQuery(kanji) {
+  // language=sql
+  const stmt = kanjidb.prepare(`
+    select literal,
+           radical,
+           strokecount,
+           JLPT as jlpt,
+           ONreading as onReading,
+           KUNreading as kunReading,
+           nanori,
+           meaning,
+           skip_1 as skip1,
+           skip_2 as skip2,
+           skip_3 as skip3
+    from kanji
+    where literal = ?
+  `)
+  const rows = stmt.all(kanji);
 
   return rows;
+}
+
+module.exports.jmdict = async (word) => {
+  const hiraganized = japanese.hiraganize(word);
+  const rows = jmDictQuery(hiraganized);
+
+  return rows;
+}
+
+module.exports.kanjiDefinition = async (sentence) => {
+
+  return kanjiDefinitionQuery(sentence);
 }
