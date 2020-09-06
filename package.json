@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@lazy-cjk/japanese": "^1.2.9",
     "@n00p3/ve-js": "^1.0.2",
     "better-sqlite3": "^7.1.0",
     "body-parser": "^1.19.0",
