@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
 
   if (features.includes('jmdict')) {
     for (const word of result.words) {
-      const sql = await sqlHelper.jmdict(word.lemma);
+      const sql = await sqlHelper.jmdict(word.lemma === '*' ? word.word : word.lemma);
       word.jmdict = sql;
     }
   }
