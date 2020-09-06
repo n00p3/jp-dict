@@ -9,10 +9,14 @@ module.exports.jmdict = async (word) => {
        or kanji like '%, ' || ?          -- ends with,
        or kanji like ?     || ',%'       -- starts with,
        or kanji like '%, ' || ? || ', %' -- in the middle.
+       or reading = ?                     
+       or reading like '%, ' || ?      
+       or reading like ?     || ',%'   
+       or reading like '%, ' || ? || ', %' 
     limit 10;
   `)
 
-  const rows = stmt.all(word, word, word, word);
+  const rows = stmt.all(word, word, word, word, word, word, word, word);
 
   return rows;
 }
