@@ -1,0 +1,12 @@
+.word {
+    font-size: xx-large;
+}
+
+.word-badge {
+    margin-top: 5px;
+}
+
+dt {
+    font-weight: 200!important;
+    font-size: small;
+}
