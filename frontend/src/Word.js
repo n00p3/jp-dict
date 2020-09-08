@@ -32,10 +32,10 @@ export default class Word extends React.Component {
           </Col>
           <Col>
             <dl>
-              {this.props.word.jmdict.map(jmdictEntry => {
-                return <React.Fragment>
-                  <dt>{jmdictEntry.position}</dt>
-                  <dd>
+              {this.props.word.jmdict.map((jmdictEntry, i) => {
+                return <React.Fragment key={'fragment-jmdict-' + i}>
+                  <dt key={'dt-jmdict-' + i}>{jmdictEntry.position}</dt>
+                  <dd key={'dd-jmdict-' + i}>
                     {jmdictEntry.gloss}
                   </dd>
                 </React.Fragment>
