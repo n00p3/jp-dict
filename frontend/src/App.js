@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import Word from "./Word";
 import Kanji from "./Kanji";
 import * as _ from 'lodash';
+import RestHelper from "./RestHelper";
 
 class App extends React.Component {
   state = {
@@ -24,7 +25,9 @@ class App extends React.Component {
   }
 
   searchInputChanged() {
-    console.log(this.state.searchInputRef.current.value)
+    RestHelper.getAll(this.state.searchInputRef.current.value)
+      .then(n => n.json())
+      .then(n => console.log(n))
   }
 
   render() {

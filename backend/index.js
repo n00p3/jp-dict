@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.get('/', async (req, res) => {
+app.get('/api/translate', async (req, res) => {
 
   const result = {};
   const text = req.query.text;
