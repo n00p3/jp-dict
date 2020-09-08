@@ -15,6 +15,7 @@ class App extends React.Component {
   state = {
     searchInputRef: null,
     searchInputValue: '',
+    words: [],
   }
 
   constructor(props) {
@@ -27,7 +28,11 @@ class App extends React.Component {
   searchInputChanged() {
     RestHelper.getAll(this.state.searchInputRef.current.value)
       .then(n => n.json())
-      .then(n => console.log(n))
+      .then(n => {
+        this.setState(() => ({
+          words: n.words,
+        }))
+      })
   }
 
   render() {
@@ -46,13 +51,24 @@ class App extends React.Component {
           </Form>
         </Row>
         <Row>
+          {/*TODO: Tokenized sentence here*/}
+        </Row>
+        <Row>
           <Col lg={8}>
             <h4 className='dict-header'>
               Words
             </h4>
-            <Word/>
-            <hr/>
-            <Word/>
+            {
+              this.state.words.map((word, i) => {
+                return <React.Fragment key={'fragment-' + i}>
+                  <Word
+                    word={word}
+                    key={'word-' + i}
+                  />
+                  <hr key={'hr-' + i}/>
+                </React.Fragment>
+              })
+            }
           </Col>
           <Col lg={4}>
             <h4 className='dict-header'>

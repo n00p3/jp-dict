@@ -12,25 +12,35 @@ export default class Word extends React.Component {
         <Row>
           <Col lg={2}>
             <Row>
-              <span className='word'>漢字</span>
+              <span className='word'>
+                  <ruby>
+                      {this.props.word.word}
+                    <rp>(</rp><rt>{this.props.word.reading}</rt><rp>)</rp>
+                  </ruby>
+              </span>
             </Row>
-            <Row>
-              <Badge className='word-badge' variant='primary'>
-                Common word
-              </Badge>
-            </Row>
-            <Row>
-              <Badge className='word-badge' variant='secondary'>
-                JLPT N5
-              </Badge>
-            </Row>
+            {/*<Row>*/}
+              {/*<Badge className='word-badge' variant='primary'>*/}
+              {/*  Common word*/}
+              {/*</Badge>*/}
+            {/*</Row>*/}
+            {/*<Row>*/}
+            {/*  <Badge className='word-badge' variant='secondary'>*/}
+            {/*    JLPT N5*/}
+            {/*  </Badge>*/}
+            {/*</Row>*/}
           </Col>
           <Col>
             <dl>
-              <dt>Noun</dt>
-              <dd>First word definition</dd>
-              <dt>Noun</dt>
-              <dd>Second word definition</dd>
+              {this.props.word.jmdict.map(jmdictEntry => {
+                return <React.Fragment>
+                  <dt>{jmdictEntry.position}</dt>
+                  <dd>
+                    {jmdictEntry.gloss}
+                  </dd>
+                </React.Fragment>
+              })
+              }
             </dl>
           </Col>
         </Row>
