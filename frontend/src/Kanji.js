@@ -12,27 +12,37 @@ export default class Kanji extends React.Component {
         <Row>
           <Col lg={4}>
             <Row>
-              <span className='kanji'>字</span>
+              <span className='kanji'>{this.props.kanji[0].literal}</span>
             </Row>
             <Row>
               <Badge className='word-badge' variant='primary'>
-                Common word
+                JLPT {this.props.kanji[0].jlpt}
               </Badge>
-              <Badge className='word-badge' variant='primary'>
-                Common word
+              <Badge className='word-badge' variant='secondary'>
+                Stroke count {this.props.kanji[0].strokecount}
               </Badge>
-              <Badge className='word-badge' variant='primary'>
-                Common word
+              <Badge className='word-badge' variant='secondary'>
+                SKIP {this.props.kanji[0].skip1} {this.props.kanji[0].skip2} {this.props.kanji[0].skip3}
               </Badge>
             </Row>
           </Col>
           <Col>
-            character, letter, word, section of village
+            {this.props.kanji[0].meaning}
             <dl>
-              <dt>Onyomi</dt>
-              <dd>あざ、 あざな、 -な</dd>
-              <dt>Kunyomi</dt>
-              <dd>ジ</dd>
+              {
+                this.props.kanji[0].kunReading !== null && this.props.kanji[0].kunReading !== '' &&
+                <>
+                  <dt>Kunyomi</dt>
+                  <dd>{this.props.kanji[0].kunReading}</dd>
+                </>
+              }
+              {
+                this.props.kanji[0].onReading !== null && this.props.kanji[0].onReading !== '' &&
+                <>
+                  <dt>Onyomi</dt>
+                  <dd>{this.props.kanji[0].onReading}</dd>
+                </>
+              }
             </dl>
           </Col>
         </Row>

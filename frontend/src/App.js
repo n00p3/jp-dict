@@ -16,6 +16,7 @@ class App extends React.Component {
     searchInputRef: null,
     searchInputValue: '',
     words: [],
+    kanji: [],
   }
 
   constructor(props) {
@@ -31,6 +32,7 @@ class App extends React.Component {
       .then(n => {
         this.setState(() => ({
           words: n.words,
+          kanji: n.kanji,
         }))
       })
   }
@@ -60,12 +62,12 @@ class App extends React.Component {
             </h4>
             {
               this.state.words.map((word, i) => {
-                return <React.Fragment key={'fragment-' + i}>
+                return <React.Fragment key={'fragment-word-' + i}>
                   <Word
                     word={word}
                     key={'word-' + i}
                   />
-                  <hr key={'hr-' + i}/>
+                  <hr key={'hr-word-' + i}/>
                 </React.Fragment>
               })
             }
@@ -74,13 +76,17 @@ class App extends React.Component {
             <h4 className='dict-header'>
               Kanji
             </h4>
-            <Kanji/>
-            <hr/>
-            <Kanji/>
-            <hr/>
-            <Kanji/>
-            <hr/>
-            <Kanji/>
+            {
+              this.state.kanji.map((kanji, i) => {
+                return <React.Fragment key={'fragment-kanji-' + i}>
+                  <Kanji
+                    kanji={kanji}
+                    key={'kanji-' + i}
+                  />
+                  <hr key={'hr-kanji-' + i}/>
+                </React.Fragment>
+              })
+            }
           </Col>
         </Row>
       </Container>
