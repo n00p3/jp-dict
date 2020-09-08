@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Word from "./Word";
+import Kanji from "./Kanji";
 
 function App() {
   return (
@@ -23,6 +24,13 @@ function App() {
           <h4 className='dict-header'>
             Kanji
           </h4>
+          <Kanji/>
+          <hr/>
+          <Kanji/>
+          <hr/>
+          <Kanji/>
+          <hr/>
+          <Kanji/>
         </Col>
       </Row>
     </Container>
