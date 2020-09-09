@@ -1,3 +1,7 @@
-.dict-header {
-    font-weight: 200;
+.dict-header, h1 {
+    font-weight: 200!important;
+}
+
+h1 {
+    margin-bottom: 1rem!important;
 }
