@@ -45,6 +45,7 @@ class App extends React.Component {
             <Form.Group>
               <Form.Control
                 type='input'
+                maxLength={200}
                 placeholder='Search anything...'
                 onChange={this.searchInputChangedDebounced}
                 ref={this.state.searchInputRef}
