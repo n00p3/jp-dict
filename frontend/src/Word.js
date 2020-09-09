@@ -20,9 +20,9 @@ export default class Word extends React.Component {
               </span>
             </Row>
             {/*<Row>*/}
-              {/*<Badge className='word-badge' variant='primary'>*/}
-              {/*  Common word*/}
-              {/*</Badge>*/}
+            {/*<Badge className='word-badge' variant='primary'>*/}
+            {/*  Common word*/}
+            {/*</Badge>*/}
             {/*</Row>*/}
             {/*<Row>*/}
             {/*  <Badge className='word-badge' variant='secondary'>*/}
@@ -32,14 +32,21 @@ export default class Word extends React.Component {
           </Col>
           <Col>
             <dl>
-              {this.props.word.jmdict.map((jmdictEntry, i) => {
-                return <React.Fragment key={'fragment-jmdict-' + i}>
-                  <dt key={'dt-jmdict-' + i}>{jmdictEntry.position}</dt>
-                  <dd key={'dd-jmdict-' + i}>
-                    {jmdictEntry.gloss}
-                  </dd>
-                </React.Fragment>
-              })
+              {
+                this.props.word.jmdict.length === 0 &&
+                <>
+                  <span>Definition not found</span>
+                </>
+              }
+              {
+                this.props.word.jmdict.map((jmdictEntry, i) => {
+                  return <React.Fragment key={'fragment-jmdict-' + i}>
+                    <dt key={'dt-jmdict-' + i}>{jmdictEntry.position}</dt>
+                    <dd key={'dd-jmdict-' + i}>
+                      {jmdictEntry.gloss}
+                    </dd>
+                  </React.Fragment>
+                })
               }
             </dl>
           </Col>
