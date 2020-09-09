@@ -41,12 +41,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Container fluid='lg' style={{minHeight: '90vh'}}>
+        <Container fluid='sm' style={{minHeight: '90vh'}}>
           <Row>
             <h1>Japanese Dictionary</h1>
           </Row>
-          <Row>
-            <Form style={{width: '100%'}}>
+          <Row >
+            <Form style={{width: '100%'}} className='input-form'>
               <Form.Group>
                 <Form.Control
                   type='input'
