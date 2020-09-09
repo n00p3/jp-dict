@@ -41,7 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Container fluid='lg'>
+        <Container fluid='lg' style={{minHeight: '90vh'}}>
           <Row>
             <h1>Japanese Dictionary</h1>
           </Row>
@@ -100,7 +100,7 @@ class App extends React.Component {
 
         </div>
         <footer>
-          <div className="fixed-bottom">
+          <div>
             <Navbar color="dark" dark>
               <Container>
                 <Row style={{margin: 'auto'}}>
