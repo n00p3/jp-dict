@@ -22,6 +22,27 @@ function jmDictQuery(word) {
   return rows;
 }
 
+function jmDictQueryEnglish(word) {
+  // language=sql
+  const stmt = jmdict.prepare(`
+    select id,
+           kanji,
+           reading,
+           null as position,
+           case when kanji = ''
+             then reading || ' - ' || gloss 
+             else kanji || ' (' || reading || ') - ' || gloss 
+           end as gloss
+    from entry
+    where gloss = ? 
+       or gloss like '%, ' || ? || ',%'
+       or gloss like '%, ' || ?
+       or gloss like ? || ', %'
+    limit 10;
+  `)
+  return stmt.all(word, word, word, word)
+}
+
 function kanjiDefinitionQuery(kanji) {
   // language=sql
   const stmt = kanjidb.prepare(`
@@ -44,11 +65,13 @@ function kanjiDefinitionQuery(kanji) {
   return rows;
 }
 
-module.exports.jmdict = async (word) => {
-  const hiraganized = japanese.hiraganize(word);
-  const rows = jmDictQuery(hiraganized);
-
-  return rows;
+module.exports.jmdict = async (word, isEnglish) => {
+  if (isEnglish) {
+    return jmDictQueryEnglish(word);
+  } else {
+    const hiraganized = japanese.hiraganize(word);
+    return jmDictQuery(hiraganized);
+  }
 }
 
 module.exports.kanjiDefinition = async (sentence) => {

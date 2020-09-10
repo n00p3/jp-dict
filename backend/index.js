@@ -8,7 +8,8 @@ const words = require('./features/words').words;
 const extractKanji = require('./features/kanji').extractKanji;
 const sqlHelper = require('./sqlHelper');
 const {check, validationResult} = require('express-validator');
-const config = require('./config')
+const hepburn = require('hepburn');
+const config = require('./config');
 
 const app = new express();
 const limiter = rateLimit({
@@ -20,6 +21,15 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 
+function jpToEngRatio(text) {
+  let jp = 0;
+  for (const char of text) {
+    if (hepburn.containsKana(char) || hepburn.containsKanji(char))
+      jp++;
+  }
+
+  return jp / text.length
+}
 
 app.get('/api/translate',
   [check('text').isLength({max: config.maxTextLength})
@@ -34,11 +44,13 @@ app.get('/api/translate',
     const text = req.query.text;
     const features = req.query.features.replace(/\s/g, '').split(',');
 
-    result.words = await words(text);
+    const isEnglish = jpToEngRatio(text) < 0.5;
+
+    result.words = await words(text, isEnglish);
 
     if (features.includes('jmdict')) {
       for (const word of result.words) {
-        const sql = await sqlHelper.jmdict(word.lemma === '*' ? word.word : word.lemma);
+        const sql = await sqlHelper.jmdict(word.lemma === '*' ? word.word : word.lemma, isEnglish);
         word.jmdict = sql;
       }
     }
